@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shadow-lg">
   <div class="card-img-wrapper">
     <img *ngIf="property.Image" class="card-img-top" src="assets/images/{{property.Image}}">
     <img *ngIf="!property.Image" class="card-img-top" src="assets/images/house_default.png">
@@ -12,8 +12,8 @@
     </ul>
   </div>
   <div class="card-body">
-    <h1>{{property.Name}}</h1>
-    <h2>{{property.Type}}</h2>
-    <h3>{{property.Price}}</h3>
+    <h2>{{property.Name}}</h2>
+    <h3>{{property.Type}}</h3>
+    <h4>{{property.Price}}</h4>
   </div>
 </div>
