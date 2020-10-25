@@ -9,11 +9,13 @@ import { PropertyCardComponent } from './components/property-card/property-card.
 import { PropertyListComponent } from './components/property-list/property-list.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { HousingService } from './services/housing.service';
+import { UserService } from './services/user.service';
 import { AddPropertyComponent } from './components/add-property/add-property.component';
 import { PropertyDetailComponent } from './components/property-detail/property-detail.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
+import { AlertifyService } from './services/alertify.service';
 
 const appRoutes: Routes = [
   {path: '', component: PropertyListComponent},
@@ -46,7 +48,9 @@ const appRoutes: Routes = [
     ReactiveFormsModule
   ],
   providers: [
-    HousingService
+    HousingService,
+    UserService,
+    AlertifyService
   ],
   bootstrap: [AppComponent]
 })
