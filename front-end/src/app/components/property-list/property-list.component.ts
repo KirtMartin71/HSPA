@@ -1,4 +1,11 @@
+
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
+=======
+import { ActivatedRoute } from '@angular/router';
+import { IProperty } from 'src/app/interfaces/iproperty';
+import { HousingService } from 'src/app/services/housing.service';
+>>>>>>> parent of 260a2506... Save new property
 
 @Component({
   selector: 'app-property-list',
@@ -6,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./property-list.component.css']
 })
 export class PropertyListComponent implements OnInit {
+<<<<<<< HEAD
 
   properties: Array<any> = [
     {
@@ -49,6 +57,28 @@ export class PropertyListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+=======
+
+  sellRent: number = 1;
+  properties: Array<IProperty>;
+
+  constructor(private route: ActivatedRoute, private housingService: HousingService) { }
+
+  ngOnInit(): void {
+
+    if( this.route.snapshot.url.toString() ) {
+      this.sellRent = 2;
+    }
+
+    this.housingService.getAllProperties(this.sellRent).subscribe(
+      data => {
+        this.properties = data;
+      }, error => {
+        console.log("HTTP ERROR:");
+        console.log(error);
+      }
+    );
+>>>>>>> parent of 260a2506... Save new property
   }
 
 }
