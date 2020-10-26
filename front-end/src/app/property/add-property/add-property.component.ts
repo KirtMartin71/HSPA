@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs/public_api';
 import { IPropertyBase } from 'src/app/model/ipropertybase';
 import { Property } from 'src/app/model/property';
