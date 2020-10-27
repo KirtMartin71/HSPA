@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Data;
+using WebAPI.Interfaces;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
@@ -12,11 +9,12 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        private readonly DataContext dataContext;
 
-        public CityController(DataContext dataContext)
+        private readonly IUnitOfWork unitOfWork;
+
+        public CityController(IUnitOfWork unitOfWork)
         {
-            this.dataContext = dataContext;
+            this.unitOfWork = unitOfWork;
 
         }
 
@@ -24,19 +22,25 @@ namespace WebAPI.Controllers
         [HttpGet("")]
         public async Task<IActionResult> GetCities()
         {
-            var cities = await Task.FromResult(dataContext.Cities.ToList());
+            var cities = await unitOfWork.CityRepository.GetCitiesAsync();
             return Ok(cities);
         }
 
-        // POST /api/city/add?cityName=<city>
-        [HttpPost("add")]
-        public async Task<IActionResult> AddCity(string cityName)
+        // Add City with JSON
+        [HttpPost("post")]
+        public async Task<IActionResult> AddCity(City city)
         {
-            City city = new Models.City();
-            city.Name = cityName;
-            await dataContext.Cities.AddAsync(city);
-            await dataContext.SaveChangesAsync();
-            return Ok(city);
+            unitOfWork.CityRepository.AddCity(city);
+            await unitOfWork.SaveAsync();
+            return StatusCode(201);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteCity(int id)
+        {
+            unitOfWork.CityRepository.DeleteCity(id);
+            await unitOfWork.SaveAsync();
+            return StatusCode(201);
         }
 
     }
