@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-//using WebAPI.Models;
+using WebAPI.Data;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -11,14 +12,31 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        public CityController()
+        private readonly DataContext dataContext;
+
+        public CityController(DataContext dataContext)
         {
+            this.dataContext = dataContext;
+
         }
 
+        // GET /api/city
         [HttpGet("")]
-        public IEnumerable<string> GetStrings()
+        public async Task<IActionResult> GetCities()
         {
-            return new string[] {"Atlanta", "New York", "Chicago"};
+            var cities = await Task.FromResult(dataContext.Cities.ToList());
+            return Ok(cities);
+        }
+
+        // POST /api/city/add?cityName=<city>
+        [HttpPost("add")]
+        public async Task<IActionResult> AddCity(string cityName)
+        {
+            City city = new Models.City();
+            city.Name = cityName;
+            await dataContext.Cities.AddAsync(city);
+            await dataContext.SaveChangesAsync();
+            return Ok(city);
         }
 
     }
