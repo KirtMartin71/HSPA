@@ -9,7 +9,7 @@ export class FilterPipe implements PipeTransform {
 
     const resultArray = [];
 
-    if ( value.length === 0 || filterString === '' || propName === '' ) {
+    if ( !value || value.length === 0 || filterString === '' || propName === '' ) {
       return value;
     }
 
